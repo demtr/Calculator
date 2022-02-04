@@ -37,7 +37,7 @@
             background-color: wheat;
             border-radius: 7px;
             border: 2px solid coral;
-       	    -webkit-user-select: none; /*не выделается текст кнопки*/
+       	    -webkit-user-select: none; /*РЅРµ РІС‹РґРµР»Р°РµС‚СЃСЏ С‚РµРєСЃС‚ РєРЅРѕРїРєРё*/
        	    -khtml-user-select: none;
        	    -moz-user-select: none;
        	    -ms-user-select: none;
@@ -81,7 +81,7 @@
                     } else if (op === '*') {
                         ff.value = a * b;
                     } else if (op === '/') {
-                        if (b===0) ff.value = 'Нельзя делить на ноль';
+                        if (b===0) ff.value = 'РќРµР»СЊР·СЏ РґРµР»РёС‚СЊ РЅР° РЅРѕР»СЊ';
                         else ff.value = a / b;
                     }
                 } else if (v.charCodeAt(0) === 8730) { // square root
@@ -97,7 +97,7 @@
     </script>
 </head>
 <body>
-<p>Микрокалькулятор</p>
+<p>РњРёРєСЂРѕРєР°Р»СЊРєСѓР»СЏС‚РѕСЂ</p>
 <table id="calculator" onclick="pressBtn(event)">
     <tr>
         <td colspan=5><input type="text" value="" id="ff"></td>
