@@ -1,0 +1,137 @@
+<!doctype HTML>
+<html lang="ru">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=windows-1251"/>
+    <title>Calculator</title>
+    <style>
+        #calculator {
+            padding: 10px;
+            width: 200px;
+            background-color: beige;
+            border: 2px solid brown;
+            border-radius: 9px;
+        }
+        p {
+            font-family: "Arial";
+            font-size: 22px;
+            color: green;
+            width: 230px;
+            text-align: center;
+        }
+        input {
+            border-radius: 5px;
+        }
+        #calculator .button:active {
+            background-color: yellow;
+            border-color: cyan;
+        }
+        .button:hover {
+            cursor: pointer;
+        }
+        .button {
+            text-align: center;
+            padding-top: 2px;
+            width: 30px;
+            height: 18px;
+            font-weight: bold;
+            background-color: wheat;
+            border-radius: 7px;
+            border: 2px solid coral;
+       	    -webkit-user-select: none; /*не выделается текст кнопки*/
+       	    -khtml-user-select: none;
+       	    -moz-user-select: none;
+       	    -ms-user-select: none;
+       	    user-select: none;
+        }
+        input[type=text] {
+            text-align: right;
+            font-size: 16px;
+            background-color: white;
+            margin-bottom: 5px;
+        }
+    </style>
+    <script>
+        let a, b, op = '', calculated = false;
+
+        function calc(v) {
+
+            if (!isNaN(parseInt(v)) || v === '.') {
+                if (calculated) {
+                   ff.value = v;
+                   calculated=false;
+                }
+                else ff.value += v;
+            } else {
+                if (v === 'C') {
+                    ff.value = '';
+                    op = '';
+                    calculated=false;
+                } else if (v === '+' || v === '-' || v === '*' || v === '/') {
+                    op = v;
+                    a = parseFloat(ff.value);
+                    ff.value = '';
+                } else if (v === '=') {
+                    if (!a) return;
+                    b = parseFloat(ff.value);
+                    calculated = true;
+                    if (op === '+') {
+                        ff.value = a + b;
+                    } else if (op === '-') {
+                        ff.value = a - b;
+                    } else if (op === '*') {
+                        ff.value = a * b;
+                    } else if (op === '/') {
+                        if (b===0) ff.value = 'Нельзя делить на ноль';
+                        else ff.value = a / b;
+                    }
+                } else if (v.charCodeAt(0) === 8730) { // square root
+                    calculated = true;
+                    b = parseFloat(ff.value);
+                    ff.value = Math.sqrt(b);
+                }
+            }
+        }
+        function pressBtn(e) {
+            if (e.target.className === 'button') calc(e.target.innerText);
+        }
+    </script>
+</head>
+<body>
+<p>Микрокалькулятор</p>
+<table id="calculator" onclick="pressBtn(event)">
+    <tr>
+        <td colspan=5><input type="text" value="" id="ff"></td>
+    </tr>
+
+    <tr>
+        <td class="button">7</td>
+        <td class="button">8</td>
+        <td class="button">9</td>
+        <td class="button">+</td>
+        <td class="button">C</td>
+    </tr>
+
+    <tr>
+        <td class="button">4</td>
+        <td class="button">5</td>
+        <td class="button">6</td>
+        <td class="button">-</td>
+        <td class="button">&radic;</td>
+    </tr>
+
+    <tr>
+        <td class="button">1</td>
+        <td class="button">2</td>
+        <td class="button">3</td>
+        <td class="button">*</td>
+    </tr>
+
+    <tr>
+        <td class="button">0</td>
+        <td class="button">.</td>
+        <td class="button">=</td>
+        <td class="button">/</td>
+    </tr>
+</table>
+</body>
+</html>
