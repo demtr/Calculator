@@ -51,29 +51,40 @@
         }
     </style>
     <script>
-        let a, b, op = '', calculated = false;
+        let a, b, op = '', calculated = false, dot = false;
+
+        function clearStatuses(calc) {
+            calculated = calc;
+            dot = false;
+            op = '';
+            a = b = null;
+        }
 
         function calc(v) {
 
             if (!isNaN(parseInt(v)) || v === '.') {
+                if (v === '.') {
+                   if (dot) return;
+                   dot = true;
+                }
                 if (calculated) {
                    ff.value = v;
                    calculated=false;
+                } else {
+                   ff.value += v;
                 }
-                else ff.value += v;
             } else {
                 if (v === 'C') {
                     ff.value = '';
-                    op = '';
-                    calculated=false;
+                    clearStatuses(false);
                 } else if (v === '+' || v === '-' || v === '*' || v === '/') {
                     op = v;
                     a = parseFloat(ff.value);
+                    dot = false;
                     ff.value = '';
                 } else if (v === '=') {
                     if (!a) return;
                     b = parseFloat(ff.value);
-                    calculated = true;
                     if (op === '+') {
                         ff.value = a + b;
                     } else if (op === '-') {
@@ -84,10 +95,13 @@
                         if (b===0) ff.value = 'Нельзя делить на ноль';
                         else ff.value = a / b;
                     }
+                    // манёвр против ошибки округления (0.1+0.2)
+                    if (ff.value.length >15) ff.value = +ff.value.slice(0,-1);
+                    clearStatuses(true);
                 } else if (v.charCodeAt(0) === 8730) { // square root
-                    calculated = true;
                     b = parseFloat(ff.value);
                     ff.value = Math.sqrt(b);
+                    clearStatuses(true);
                 }
             }
         }
@@ -100,7 +114,7 @@
 <p>Микрокалькулятор</p>
 <table id="calculator" onclick="pressBtn(event)">
     <tr>
-        <td colspan=5><input type="text" value="" id="ff"></td>
+        <td colspan=5><input type="text" value="" id="ff" readonly></td>
     </tr>
 
     <tr>
