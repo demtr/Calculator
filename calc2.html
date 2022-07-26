@@ -110,8 +110,20 @@
             }
 
         }
+
         function pressBtn(e) {
             if (e.target.className === 'button') calc(e.target.innerText);
+        }
+
+        let preValue;  //  Значение до внесения в поле input
+
+        function test1(e) {
+            preValue = display.value;
+            e.returnValue = /[\d\.\-\+]/.test(e.key); // Отмена ввода ненужных символов
+        }
+
+        function test2(e) {
+            if (!/^[-\+]?\d+\.?\d*$/.test(display.value)) display.value = preValue;
         }
     </script>
 </head>
@@ -119,7 +131,7 @@
 <p>Микрокалькулятор</p>
 <table id="calculator" onclick="pressBtn(event)">
     <tr>
-        <td colspan=5><input type="text" value="" id="display" readonly></td>
+        <td colspan=5><input type="text" id="display" onkeypress="test1(event)" oninput="test2(event)"></td>
     </tr>
 
     <tr>
